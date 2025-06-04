@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app.db import get_db
 
 main = Blueprint('main', __name__)
 
@@ -40,6 +41,13 @@ def add_expense():
     group = request.form.get('group')
     split_with = request.form.get('split_with')
     date = request.form.get('date')
+
+    db = get_db()
+    db.execute(
+        "INSERT INTO expenses (description, amount, group_name, split_with, date) VALUES (?, ?, ?, ?, ?)",
+        (description, amount, group, split_with, date)
+    )
+    db.commit()
 
     # Placeholder for saving logic
     flash('Expense added successfully!', 'success')

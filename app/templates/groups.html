@@ -1,0 +1,45 @@
+<!-- app/templates/groups.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups - PotShare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>PotShare</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/groups">Groups</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Your Groups</h2>
+            <button onclick="alert('Group creation coming soon')">+ Create New Group</button>
+
+            <div class="group-list">
+                <div class="group-card">
+                    <h3>Weekend Trip</h3>
+                    <p>Members: Alice, Bob, Charlie</p>
+                    <p>Total Expenses: £125.00</p>
+                </div>
+
+                <div class="group-card">
+                    <h3>House Bills</h3>
+                    <p>Members: You, Dave, Emma</p>
+                    <p>Total Expenses: £200.00</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 PotShare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
