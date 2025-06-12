@@ -9,7 +9,11 @@
 </head>
 <body>
     <header>
-        <h1>PotShare</h1>
+        <div class="logo-title">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="PotShare Logo" class="logo">
+            <h1>PotShare</h1>
+        </div>
+        
         <nav>
             <a href="{{ url_for('main.home') }}">Home</a>
             <a href="{{ url_for('main.groups') }}">Groups</a>
@@ -20,11 +24,20 @@
     </header>
 
     <main>
-        <section class="summary">
-            <h2>Overview</h2>
-            <p>Total Balance: <strong>£0.00</strong></p>
+        <!-- Summary Section -->
+        <section class="summary-cards">
+            <div class="summary-card owe">
+                <h3>You Owe</h3>
+                <p>£{{ '%.2f'|format(user_owes) }}</p>
+            </div>
+            <div class="summary-card owed">
+                <h3>You Are Owed</h3>
+                <p>£{{ '%.2f'|format(user_is_owed) }}</p>
+            </div>
         </section>
 
+
+        <!-- Add Expense Form -->
         <section class="expense-form">
             <h2>Add Expense</h2>
             <form action="{{ url_for('main.add_expense') }}" method="post">
@@ -37,10 +50,38 @@
             </form>
         </section>
 
-        <section class="recent-expenses">
-            <h2>Recent Expenses</h2>
-            <p>No expenses yet.</p>
+        <!-- Recent Activity -->
+        <section class="recent-activity">
+            <h2>Recent Activity</h2>
+            {% if expenses %}
+                <ul class="activity-feed">
+                    {% for expense in expenses %}
+                        <li>
+                            <strong>{{ expense['description'] }}</strong> –
+                            £{{ '%.2f'|format(expense['amount']) }} split with
+                            {{ expense['split_with'] or '—' }}
+                            {% if expense['group_name'] %}
+                                in <em>{{ expense['group_name'] }}</em>
+                            {% endif %}
+                            on {{ expense['date'] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No expenses added yet.</p>
+            {% endif %}
         </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
     </main>
 
     <footer>

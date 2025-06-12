@@ -61,7 +61,11 @@
 </head>
 <body>
     <header>
-        <h1>PotShare</h1>
+        <div class="logo-title">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="PotShare Logo" class="logo">
+            <h1>PotShare</h1>
+        </div>
+        
         <nav>
             <a href="/">Home</a>
             <a href="/groups">Groups</a>
