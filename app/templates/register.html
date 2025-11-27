@@ -1,7 +1,31 @@
-<h2>Register</h2>
-<form method = "POST">
-    <input type="text" name="username" placeholder="Choose a username" required>
-    <input type="password" name="password" placeholder="Choose a password" required>
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a href=" {{ url_for('main.login') }}">Login</a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PotShare - Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Register for PotShare</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+            <input type="text" name="username" placeholder="Choose a username" required>
+            <input type="password" name="password" placeholder="Choose a password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('main.login') }}">Login</a></p>
+    </div>
+</body>
+</html>

@@ -1,10 +1,13 @@
 # app/db.py
 
 import sqlite3
+import os
 from flask import g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-DATABASE = r"C:\Users\joetr\OneDrive - Bournemouth University\Python\Potshare\app\data\database.db"
+# Get the directory where this file is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, 'data', 'database.db')
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -23,11 +26,11 @@ def init_db():
     with open("schema.sql", "r") as f:
         db.executescript(f.read())
 
-def add_expense_to_db(description, amount, group, split_with, date):
+def add_expense_to_db(description, amount, group, split_with, date, payer_id):
     db = get_db()
     db.execute(
-        'INSERT INTO expenses (description, amount, group_name, split_with, date) VALUES (?, ?, ?, ?, ?)',
-        (description, amount, group, split_with, date)
+        'INSERT INTO expenses (description, amount, group_name, split_with, date, payer_id) VALUES (?, ?, ?, ?, ?, ?)',
+        (description, amount, group, split_with, date, payer_id)
     )
     db.commit()
 

@@ -61,6 +61,7 @@ def logout():
     flash('Logged out successfully!', 'info')
     return redirect(url_for('main.login'))
 
+@main.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -76,6 +77,10 @@ def register():
 # Add Expense (Handle form submission)
 @main.route('/add-expense', methods=['POST'])
 def add_expense():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for('main.login'))
+    
     # Extract form data and process it
     description = request.form.get('description')
     amount = request.form.get('amount')
@@ -87,7 +92,7 @@ def add_expense():
         flash('Please fill in all required fields.', 'error')
         return redirect(url_for('main.home'))
 
-    add_expense_to_db(description, float(amount), group, split_with, date)
+    add_expense_to_db(description, float(amount), group, split_with, date, user_id)
 
     # Placeholder for saving logic
     flash('Expense added successfully!', 'success')
