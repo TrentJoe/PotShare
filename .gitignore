@@ -32,6 +32,7 @@ wheels/
 *.sqlite
 *.sqlite3
 backend/database/*.db
+app/data/
 
 # IDE
 .vscode/
@@ -46,6 +47,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Flask
+instance/
 
 # Old project files (if migrating)
 app/
